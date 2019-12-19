@@ -1,0 +1,21 @@
+CC=g++  -m64 -pthread -fPIC -Wall -O3 -fno-strict-aliasing -Bstatic -lstdc++ -Bdynamic
+COFLAGS=
+CWFLAGS=-DMT -DUNIX -DLINUX -DLINUX22 -DPROTOCHECK -DWITH_ZLIB -DWITH_GZIP
+CFLAGS=$(CWFLAGS) $(COFLAGS) $(CIFLAGS) $(CMFLAGS)
+LINK = g++ -std=c++11 -o
+OUT = ./
+LIBS=
+DLLS=-Bdynamic libckm_eventrelation64.so -lpthread
+
+OBJECTS=main.o \
+
+.cpp.o:
+	$(CC) $(CFLAGS) -c $< -o $@
+	
+test:
+	$(LINK) event_relationtest64 lastresult.o -DUNIX -DLINUX22 main.cpp $(LIBS) $(DLLS) -ldl -lrt -lm -lpthread
+			
+clean:	
+	rm -f $(OBJECTS)
+
+	

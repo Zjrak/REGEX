@@ -1,0 +1,6 @@
+{
+ global:
+	EVENT_GetRelation;
+ local:
+       *;
+};

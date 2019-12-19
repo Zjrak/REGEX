@@ -1,0 +1,24 @@
+CC=g++ -m64 -g -pthread -fPIC -Wall -O3 -fno-strict-aliasing -Bstatic -Bdynamic
+
+COFLAGS=
+CWFLAGS=-DMT -DLINUX -DPROTOCHECK -DWITH_ZLIB -DWITH_GZIP
+CIFLAGS=-L. -L./include/ -lm
+CFLAGS=$(CWFLAGS) $(COFLAGS) $(CIFLAGS) $(CMFLAGS) $(INCLUDE)
+OUT= ./
+SYS.A = -ldl -lpthread
+LIBS=-Bstatic
+DLLS=-Bdynamic -lpthread
+
+OBJECTS=lastresult.o 
+
+libckm_eventrelation64.so:	$(OBJECTS)
+	$(CC) -fPIC -Wl,--version-script=libckm_eventrelation.sym -shared -o $(OUT)$@ $(OBJECTS) $(LEXFILES) $(DLLS) $(LIBS) $(SYS.A)
+
+.c.o:
+	$(CC) $(CFLAGS) -c $< -o $@
+	
+.cpp.o:
+	$(CC) $(CFLAGS) -c $< -o $@
+			
+clean:	
+	rm -f $(OBJECTS)
